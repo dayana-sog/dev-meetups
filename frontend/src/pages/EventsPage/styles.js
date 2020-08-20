@@ -15,7 +15,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 410px;
+    height: 300px;
   }
 
   label#thumbnail input {
@@ -34,7 +34,7 @@ export const Container = styled.div`
     margin: 50px auto;
     padding: 64px;
     max-width: 730px;
-    background: #909090;
+    background: #ccc;
     border-radius: 8px;
 
     display: flex;
