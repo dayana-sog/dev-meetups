@@ -15,7 +15,7 @@ const EventList = ({ events, squery }) => {
     event => (
       <ul key={event.id} >
         <li>
-          <img src={event.thumbnail_url} alt="event image" />
+          <img src={event.thumbnail_url} alt="event" />
           <h2>{event.title}</h2>
           <strong>{event.category}</strong>
           <p>{event.description}</p><br />
@@ -25,11 +25,11 @@ const EventList = ({ events, squery }) => {
           <button>Participar</button>
         </li>
       </ul>
-    )  
+    )
   )
 };
 
-function Dashboard() {
+function Dashboard({ history }) {
   const [events, setEvents] = useState([]);
   const [squery, setSQuery] = useState('')
   const user_id = localStorage.getItem('user');
@@ -38,11 +38,17 @@ function Dashboard() {
     const response = await api.get('/dashboard', { headers: { user_id } });
 
     setEvents(response.data);
-  }, []);
+  }, [user_id]);
+
+  const handleMyEvents = useCallback(async() => {
+    const response = await api.get('/myevents', { headers: { user_id } });
+
+    setEvents(response.data);
+  }, [user_id]);
 
   useEffect(() => {
     getEvent();
-  }, []);
+  }, [getEvent]);
 
   return (
     <Container>
@@ -54,6 +60,17 @@ function Dashboard() {
           placeholder="Busque Categoria de Evento"
           onChange={e => setSQuery(e.target.value)}
         />
+
+        <div className="button-dash">
+          <button 
+            className="button-link"
+            onClick={() => history.push('/events')}
+          >Criar Evento</button>
+          <button
+            onClick={handleMyEvents}
+          >Meus eventos</button>
+        </div>
+
       </div>
 
       {squery ?
@@ -61,7 +78,7 @@ function Dashboard() {
         <ul>
           {events.map(event => (
             <li key={event.id}>
-              <img src={event.thumbnail_url} alt="event image" />
+              <img src={event.thumbnail_url} alt="event" />
               <h2>{event.title}</h2>
               <strong>{event.category}</strong>
               <p>{event.description}</p><br />

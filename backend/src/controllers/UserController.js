@@ -34,9 +34,9 @@ class UserController {
 
   async index(req, res) {
     try {
-      const { id } = req.params;
+      const { user_id } = req.headers;
 
-      const user = await User.findById(id);
+      const user = await User.findById( user_id );
 
       return res.json(user);
     } catch (error) {

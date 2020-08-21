@@ -9,6 +9,7 @@ import LoginController from './controllers/LoginController';
 import RegistrationController from './controllers/RegistrationController';
 import ApprovalController from './controllers/ApprovalController';
 import RejectionController from './controllers/RejectionController';
+import MyEventsController from './controllers/MyEventsController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -30,9 +31,12 @@ routes.post('/user/register', UserController.store);
 routes.get('/user/:id', UserController.index);
 
 //Dashboard
-routes.get('/dashboard/:id', DashboardController.show);
-routes.get('/dashboard/', DashboardController.index);
-routes.get('/dashboard/:category', DashboardController.index);
+routes.get('/dashboard/:id', DashboardController.getEventsById);
+routes.get('/dashboard/', DashboardController.getAllEvents);
+routes.get('/dashboard/:category', DashboardController.getAllEvents);
+
+//MyEvents
+routes.get('/myevents', MyEventsController.getEventsByUserId);
 
 //Event
 routes.post('/event', upload.single('thumbnail'), EventController.store);

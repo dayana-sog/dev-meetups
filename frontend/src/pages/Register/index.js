@@ -37,7 +37,7 @@ function Register({ history }) {
     try {
       
       const response = await api.post('user/register', data);
-      const userExist = response.data || false;
+      // const userExist = response.data || false;
       const { message } = response.data;
 
       if (message !== 'User alredy exists.') {  
@@ -116,7 +116,7 @@ function Register({ history }) {
           <button type="submit">
             Cadastrar
           </button>
-          <Link to="/" className="signup">
+          <Link to="/login" className="signup">
             <br/>
             Voltar
           </Link>

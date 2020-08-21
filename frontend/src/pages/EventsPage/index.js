@@ -158,7 +158,7 @@ function EventsPage({ history }) {
         <button type="submit">
           Cadastrar evento
         </button>
-        <Link to="/register" className="signup">
+        <Link to="/" className="signup">
           <br />
             Voltar
         </Link>

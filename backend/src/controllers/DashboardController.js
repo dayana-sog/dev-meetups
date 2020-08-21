@@ -3,7 +3,7 @@ import Event from '../models/Event';
 
 class DashboardController{
 
-  async show(req,res) {
+  async getEventsById(req,res) {
     try {
       const { id } = req.params;
 
@@ -17,13 +17,12 @@ class DashboardController{
     }
   };
 
-  async index(req,res) {
+  async getAllEvents(req,res) {
     const { category } = req.query;
 
     try {
       if (category) {
         const events  = await Event.find({category});
-
 
         return res.json(events);
 
