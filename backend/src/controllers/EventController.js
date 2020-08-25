@@ -34,9 +34,9 @@ class EventController {
     try {
       const { id } = req.params;
 
-      const eventDelete = await Event.findByIdAndDelete(id);
+      await Event.findByIdAndDelete(id);
 
-      return res.json({ message: `The event ${id} was deleted with success.`, eventDelete });
+      return res.json({ message: `The event ${id} was deleted with success.` });
     } catch (error) {
       return res.status(400).json({ message: "Sorry. We don't have any event with the ID."});
     }

@@ -47,4 +47,11 @@ export default createGlobalStyle`
     color: #ffffff;
     font-weight: bold;
   }
+
+  .toast-exit {
+    background-color: #2d2942;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: bold;
+  }
 `;

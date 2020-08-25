@@ -1,7 +1,6 @@
 import styled from 'styled-components';
+
 import signInBackground from '../../assets/meet.jpg';
-
-
 
 export const Container = styled.div`
     height: 100vh;
@@ -41,7 +40,7 @@ export const Content = styled.div`
         background: #F0F0F5;
         border-radius: 8px;
         border: 0;
-        padding: 16px 80px;
+        padding: 16px 66px;
         font-size: 16px;
         color: #6C6C80;
         margin: 0rem 0 1rem 1rem;
@@ -84,7 +83,7 @@ export const Content = styled.div`
     }
 `;
 
-export const Background = styled.div`
+export const Background = styled.figure`
     flex: 1;
     background: url(${signInBackground}) no-repeat center;
     background-size: cover;

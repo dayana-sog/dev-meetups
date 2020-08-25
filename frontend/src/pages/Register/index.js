@@ -64,6 +64,7 @@ function Register({ history }) {
 
   return (
     <Container>
+      <Background />
       <Content>
         <form onSubmit={handleSubmit}>
           <legend>
@@ -122,7 +123,7 @@ function Register({ history }) {
           </Link>
         </form>
       </Content>
-      <Background />
+      
     </Container>
   );
 }

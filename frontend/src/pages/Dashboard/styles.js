@@ -96,7 +96,20 @@ export const Container = styled.div`
         margin-top: 2rem;
         cursor: pointer;
         box-shadow: 0px 2px 4px #00000029;
+      }
 
+      .delete-button {
+        height: 56px;
+        background: #FF0000;
+        border-radius: 8px;
+        color: #FFF;
+        font-weight: bold;
+        font-size: 16px;
+        border: 0;
+        transition: background-color 0.2s;
+        margin-top: 2rem;
+        cursor: pointer;
+        box-shadow: 0px 2px 4px #00000029;
       }
     }
   }

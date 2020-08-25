@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import moment from 'moment';
+import { toast } from 'react-toastify';
+
+import LogOutButton from '../../components/LogOutButton';
 
 import api from '../../services/api';
 
@@ -12,6 +15,7 @@ const EventList = ({ events, squery }) => {
   const filtered = useMemo(() => filter(events, squery), [events, squery]);
 
   return filtered.map(
+
     event => (
       <ul key={event.id} >
         <li>
@@ -32,6 +36,8 @@ const EventList = ({ events, squery }) => {
 function Dashboard({ history }) {
   const [events, setEvents] = useState([]);
   const [squery, setSQuery] = useState('')
+  const [button, setButton] = useState('Meus Eventos')
+  const [deleteButton, setDeleteButton] = useState(false);
   const user_id = localStorage.getItem('user');
 
   const getEvent = useCallback(async () => {
@@ -40,57 +46,101 @@ function Dashboard({ history }) {
     setEvents(response.data);
   }, [user_id]);
 
-  const handleMyEvents = useCallback(async() => {
-    const response = await api.get('/myevents', { headers: { user_id } });
+  const handleMyEvents = useCallback(async () => {
+    if (button === 'Meus Eventos') {
+      const response = await api.get('/myevents', { headers: { user_id } });
+      setDeleteButton(true);
+      setButton('Todos');
+      setEvents(response.data);
+    } else {
+      const response = await api.get('/dashboard', { headers: { user_id } });
+      setDeleteButton(false);
+      setButton('Meus Eventos');
+      setEvents(response.data);
+    }
+  }, [user_id, button]);
 
-    setEvents(response.data);
-  }, [user_id]);
+  const handleDeleteEvent = useCallback(async (id) => {
+    try {
+      const response = await api.delete(`/event/${id}`);
+
+      const { message } = response.data;
+
+      toast.info(message, {
+        className: 'toast',
+      });
+
+      setTimeout(() => {
+        handleMyEvents();
+      }, 2000);
+
+    } catch (error) {
+
+      toast.error('Error while deleting the event, try again later.', {
+        className: 'toast-erro',
+      });
+    }
+  }, [handleMyEvents]);
 
   useEffect(() => {
     getEvent();
   }, [getEvent]);
 
   return (
-    <Container>
-      <h1>Meetings</h1>
+    <>
+      <LogOutButton history={history} />
+      <Container>
+        <h1>Meetings</h1>
 
-      <div>
-        <input
-          type="text"
-          placeholder="Busque Categoria de Evento"
-          onChange={e => setSQuery(e.target.value)}
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="Busque Categoria de Evento"
+            onChange={e => setSQuery(e.target.value)}
+          />
 
-        <div className="button-dash">
-          <button 
-            className="button-link"
-            onClick={() => history.push('/events')}
-          >Criar Evento</button>
-          <button
-            onClick={handleMyEvents}
-          >Meus eventos</button>
+          <div className="button-dash">
+            <button
+              className="button-link"
+              onClick={() => history.push('/events')}
+            >Criar Evento</button>
+            <button
+              onClick={handleMyEvents}
+            >{button}</button>
+          </div>
+
         </div>
 
-      </div>
+        {squery ?
+          <EventList
+            events={events}
+            squery={squery}
+          /> :
+          <ul>
+            {events.map(event => (
+              <li key={event.id}>
+                <img src={event.thumbnail_url} alt="event" />
+                <h2>{event.title}</h2>
+                <strong>{event.category}</strong>
+                <p>{event.description}</p><br />
+                <p>{moment(event.date).format('DD/MM/YYYY')}</p><br />
+                <h2>{parseFloat(event.price).toFixed(2)}</h2>
 
-      {squery ?
-        <EventList events={events} squery={squery} /> :
-        <ul>
-          {events.map(event => (
-            <li key={event.id}>
-              <img src={event.thumbnail_url} alt="event" />
-              <h2>{event.title}</h2>
-              <strong>{event.category}</strong>
-              <p>{event.description}</p><br />
-              <p>{moment(event.date).format('DD/MM/YYYY')}</p><br />
-              <h2>{parseFloat(event.price).toFixed(2)}</h2>
+                {deleteButton ?
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteEvent(event.id)}
+                  >Delete</button>
+                  : null
+                }
+                {button === 'Meus Eventos' ? <button>Participar</button> : <button>Editar</button>}
 
-              <button>Participar</button>
-            </li>
-          ))}
-        </ul>
-      }
-    </Container>
+              </li>
+            ))}
+          </ul>
+        }
+      </Container>
+    </>
   );
 }
 

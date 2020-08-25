@@ -41,7 +41,7 @@ export const Content = styled.div`
         background: #F0F0F5;
         border-radius: 8px;
         border: 0;
-        padding: 16px 80px;
+        padding: 16px 66px;
         font-size: 16px;
         color: #6C6C80;
         margin: 1rem 0 1.5rem 1rem;

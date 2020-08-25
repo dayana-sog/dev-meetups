@@ -32,9 +32,12 @@ function Login({ history }) {
 
     const response = await api.post('login', data);
     const userId = response.data._id || false;
+    const user = response.data.user || false;
 
     if (userId) {
-      localStorage.setItem('user', userId);
+      localStorage.setItem('user_id', userId);
+      localStorage.setItem('user', user);
+      
 
       history.push('/');
     } else {
