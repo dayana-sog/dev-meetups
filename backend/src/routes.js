@@ -21,6 +21,7 @@ const upload = multer(multerConfig);
 routes.post('/registration/:eventId', RegistrationController.store);
 routes.get('/registration/:registration_id', RegistrationController.show);
 routes.post('/registration/:registration_id/approvals', ApprovalController.update);
+routes.get('/registration', ApprovalController.index);
 routes.post('/registration/:registration_id/rejections', RejectionController.update);
 
 //LogIn

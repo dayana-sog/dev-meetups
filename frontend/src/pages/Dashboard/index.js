@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import moment from 'moment';
+
 import { toast } from 'react-toastify';
 
 import LogOutButton from '../../components/LogOutButton';
+import Notifications from '../../components/Notifications';
 
 import api from '../../services/api';
 
@@ -62,7 +64,7 @@ function Dashboard({ history }) {
 
   const handleDeleteEvent = useCallback(async (id) => {
     try {
-      const response = await api.delete(`/event/${id}`);
+      const response = await api.delete(`/event/${id}`, { headers:  { user_id } });
 
       const { message } = response.data;
 
@@ -82,6 +84,16 @@ function Dashboard({ history }) {
     }
   }, [handleMyEvents]);
 
+  const handleRegistration = useCallback(async(eventId, eventDate) => {
+    try {
+      const response = await api.post(`/registration/${eventId}`, { date: eventDate}, {headers: {user_id}});
+
+      console.log('handleRegistration', response.data);
+    } catch (error) {
+      console.log('erro handle REgistration', error)
+    }
+  }, []);
+
   useEffect(() => {
     getEvent();
   }, [getEvent]);
@@ -89,6 +101,7 @@ function Dashboard({ history }) {
   return (
     <>
       <LogOutButton history={history} />
+      <Notifications user_id={user_id}/>
       <Container>
         <h1>Meetings</h1>
 
@@ -133,7 +146,11 @@ function Dashboard({ history }) {
                   >Delete</button>
                   : null
                 }
-                {button === 'Meus Eventos' ? <button>Participar</button> : <button>Editar</button>}
+                {button === 'Meus Eventos' ? 
+                  <button 
+                    onClick={() => handleRegistration(event.id, event.date)}
+                  >Participar</button> : 
+                  <button>Editar</button>}
 
               </li>
             ))}

@@ -6,6 +6,8 @@ class RegistrationController {
     const { eventId } = req.params;
     const { date } = req.body;
 
+    console.log('dentro de registration', user_id );
+
     const registration = await Registration.create({
       user: user_id,
       event: eventId,
@@ -16,6 +18,7 @@ class RegistrationController {
       .populate('event')
       .populate('user', '-password') //'-password' => faz com que não mostre
       .execPopulate();
+
 
     return res.json(registration);
   };
@@ -31,7 +34,7 @@ class RegistrationController {
       .populate('user', '-password')
       .execPopulate();
 
-      return res.json(registration);
+      return res.json({ message: 'Soliciteted de registration with de creator. Wait for your confimation.'});
     } catch (error) {
       return res.json({ message: `Error registration Id does not exist. ${error}` });
     }

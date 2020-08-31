@@ -31,11 +31,9 @@ function Login({ history }) {
     };
 
     const response = await api.post('login', data);
-    const userId = response.data._id || false;
-    const user = response.data.user || false;
+    const user = response.data._id || false;
 
-    if (userId) {
-      localStorage.setItem('user_id', userId);
+    if (user) {
       localStorage.setItem('user', user);
       
 

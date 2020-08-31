@@ -7,10 +7,9 @@ const LogOutButton = ({ history }) => {
 
   const handleLogOut = useCallback(() => {
     localStorage.removeItem('user');
-    localStorage.removeItem('user_id');
 
-    toast.info('We appreciate your visit, come back always.', {
-      className: 'toast-exit',
+    toast.info('We appreciate your visit, come back always ', {
+      className: 'toast',
     });
 
     setTimeout(() => {
