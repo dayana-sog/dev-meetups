@@ -33,19 +33,19 @@ const Notifications = ({user_id}) => {
     })();
   }, []);
 
-  // function handleToggleVisible() {
-  //   setVisible(!visible);
-  // }
+  function handleToggleVisible() {
+    setVisible(!visible);
+  }
 
-  // async function handleMarkAsRead(id) {
-  //   await api.put(`notifications/${id}`);
+  async function handleMarkAsRead(id) {
+    await api.put(`notifications/${id}`);
 
-  //   setNotifications(
-  //     notifications.map((notification) =>
-  //       notification._id === id ? { ...notification, read: true } : notification
-  //     )
-  //   );
-  // }
+    setNotifications(
+      notifications.map((notification) =>
+        notification._id === id ? { ...notification, read: true } : notification
+      )
+    );
+  }
 
 
   return (
