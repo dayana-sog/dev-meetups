@@ -4,7 +4,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 
 import LogOutButton from '../../components/LogOutButton';
-import Notifications from '../../components/Notifications';
+// import Notifications from '../../components/Notifications';
 
 import api from '../../services/api';
 
@@ -101,7 +101,7 @@ function Dashboard({ history }) {
   return (
     <>
       <LogOutButton history={history} />
-      <Notifications user_id={user_id}/>
+      {/* <Notifications user_id={user_id}/> */}
       <Container>
         <h1>Meetings</h1>
 
